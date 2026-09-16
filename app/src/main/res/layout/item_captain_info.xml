@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- صورة الكابتن -->
+            <ImageView
+                android:id="@+id/ivCaptainAvatar"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_service_box"
+                android:contentDescription="صورة الكابتن"
+                android:padding="6dp"
+                android:src="@drawable/logo_yalla_meshwar" />
+
+            <!-- بيانات الكابتن -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvCaptainName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="كابتن معتمد"
+                        android:textColor="#0F172A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- درع التوثيق الأخضر المعتمد من الإدارة -->
+                    <ImageView
+                        android:id="@+id/ivVerifiedBadge"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="حساب موثق ومعتمد"
+                        android:src="@drawable/ic_verified_shield"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvVehicleInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="توكتوك حديث • أ ب ج 1234"
+                    android:textColor="#64748B"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvCaptainRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="⭐ 4.9 (120 رحلة)"
+                    android:textColor="#F59E0B"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- زر الاتصال السريع -->
+            <ImageButton
+                android:id="@+id/btnCallCaptain"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_service_box"
+                android:contentDescription="اتصال بالكابتن"
+                android:padding="10dp"
+                android:src="@android:drawable/ic_menu_call"
+                app:tint="#10B981" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

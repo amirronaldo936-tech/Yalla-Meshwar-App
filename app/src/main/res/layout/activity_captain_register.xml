@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تسجيل كابتن جديد"
+            android:textColor="#0F172A"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="يرجى ملء البيانات وإرفاق المستندات المطلوبة للمراجعة"
+            android:textColor="#64748B"
+            android:textSize="14sp" />
+
+        <!-- اختيار نوع المركبة -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نوع المركبة:"
+            android:textStyle="bold"
+            android:textColor="#1E293B" />
+
+        <Spinner
+            android:id="@+id/spVehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_input_field" />
+
+        <!-- اختيار النوع/الجنس -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="الجنس:"
+            android:textStyle="bold"
+            android:textColor="#1E293B" />
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="ولد" />
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="بنت" />
+        </RadioGroup>
+
+        <!-- أزرار رفع الصور -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUploadIdFront"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="رفع وجه البطاقة الشخصية"
+            android:backgroundTint="#0284C7"
+            app:cornerRadius="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUploadIdBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="رفع ظهر البطاقة الشخصية"
+            android:backgroundTint="#0284C7"
+            app:cornerRadius="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUploadLicense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="رفع صورة الرخصة"
+            android:backgroundTint="#0284C7"
+            app:cornerRadius="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUploadCarPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="رفع صورة المركبة (العربية / التوكتوك / الاسكوتر)"
+            android:backgroundTint="#0284C7"
+            app:cornerRadius="12dp" />
+
+        <!-- زر إرسال للآدمن -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="إرسال البيانات للمراجعة"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#10B981"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</ScrollView>

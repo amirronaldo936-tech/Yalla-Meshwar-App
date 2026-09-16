@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">يلا مشوار</string>
+    <string name="app_slogan">أرخص سعر مشوار في مصر | عمولة 12% فقط</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="guest_login">الدخول كزائر</string>
+    <string name="confirm_ride">تأكيد وطلب الرحلة</string>
+    <string name="title_choose_service">يلا مشوار - اختر خدمتك</string>
+    <string name="btn_request_ride">تأكيد وطلب الرحلة</string>
+    <string name="login_title">تسجيل الدخول</string>
+    <string name="captain_register_title">انضم ككابتن</string>
+    <string name="admin_dashboard_title">لوحة تحكم الإدارة</string>
+    <string name="chat_title">المحادثة الفورية</string>
+    
+    <!-- خدمات ومركبات -->
+    <string name="vehicle_tuktuk">توكتوك</string>
+    <string name="vehicle_scooter">اسكوتر</string>
+    <string name="vehicle_malaki">ملاكي</string>
+    <string name="service_meshwar">مشوار</string>
+    <string name="service_talabat">طلبات</string>
+    <string name="service_afrah">أفراح</string>
+    <string name="service_safar">سفر ومحافظات</string>
+    <string name="service_matar">توصيل للمطار</string>
+    
+    <!-- الأمان والطوارئ -->
+    <string name="safety_guidelines">إرشادات الأمان وقوانين الاستخدام</string>
+    <string name="btn_sos">طوارئ SOS 🚨</string>
+    <string name="btn_share_ride">مشاركة مسار الرحلة 📍</string>
+    <string name="quiet_ride">رحلة هادئة بدون كلام 🤫</string>
+    <string name="verified_captain">كابتن موثق ومعتمد 🛡️</string>
+    
+    <!-- الأسعار والعمولة -->
+    <string name="commission_notice">عمولة التطبيق 12% فقط | أعلى صافي ربح للكابتن وأوفر سعر للزبون</string>
+    <string name="fare_currency">ج.م</string>
+</resources>

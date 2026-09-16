@@ -1,0 +1,8 @@
+{
+  "name": "يلا مشوار",
+  "description": "تطبيق يلا مشوار لخدمات التوصيل والنقل والتفاوض على الأسعار في مصر (توكتوك، اسكوتر، ملاكي - مشاوير، طلبات، أفراح، سفر، مطار)",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

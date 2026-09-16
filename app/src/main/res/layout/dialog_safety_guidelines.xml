@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🛡️ إرشادات الأمان وقوانين الاستخدام"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="4dp"
+            android:text="1. الاحترام المتبادل: يلتزم جميع المستخدمين والكباتن بالتعامل الراقي.\n\n2. الأمان أثناء الرحلة: ربط حزام الأمان/ارتداء الخوذة لركاب الاسكوتر واجب أساسي.\n\n3. مطابقة البيانات: تأكد دائماً من مطابقة لوحة المركبة وصورة الكابتن قبل الركوب.\n\n4. مشاركة المسار: يُنصح باستخدام ميزة مشاركة الرحلة مع الأهل للتأكد من وصولك بسلام.\n\n5. حظر المواد المخالفة: يمنع منعاً باتاً نقل أي مواد غير قانونية أو خطرة."
+            android:textColor="#334155"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnCloseSafety"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#10B981"
+            android:text="فهمت والتزم بذلك"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
