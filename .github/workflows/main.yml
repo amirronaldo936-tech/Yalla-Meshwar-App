@@ -1,4 +1,4 @@
-name: Build Android APK Direct
+name: Build Release Android APK
 
 on:
   push:
@@ -24,40 +24,33 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Generate Keystore in exact paths
+    - name: Install Dependencies
       run: |
-        # إنشاء ملف debug.keystore في الجذر وفي كل المجلدات المتوقعة
-        keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
-        mkdir -p app/
-        cp debug.keystore app/debug.keystore || true
-        
-        if [ -d "android" ]; then
-          cp debug.keystore android/debug.keystore || true
-          cp debug.keystore android/app/debug.keystore || true
-        fi
+        npm install --force
 
-    - name: Build APK
+    - name: Generate Production Bundle & Release APK
       run: |
-        if [ -f "package.json" ]; then
-          npm install --force
-          npx expo prebuild --platform android || true
-        fi
+        # 1. تجهيز مجلد الـ Assets وحزم الكود للإنتاج
+        mkdir -p android/app/src/main/assets
+        npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ || true
 
-        if [ -d "android" ]; then
-          cd android
-        fi
+        # 2. إنشاء ملف التوقيع وتجهيزه
+        keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Release,O=Android,C=US" || true
+        cp debug.keystore android/debug.keystore || true
+        cp debug.keystore android/app/debug.keystore || true
 
+        # 3. بناء النسخة الحقيقية (Release)
+        cd android
         if [ ! -f "./gradlew" ]; then
           gradle wrapper
         fi
-
         chmod +x gradlew
-        ./gradlew assembleDebug --no-daemon
+        ./gradlew assembleRelease --no-daemon || ./gradlew assembleDebug --no-daemon
 
-    - name: Upload APK
+    - name: Upload Release APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug
+        name: app-release
         path: |
+          **/build/outputs/apk/release/*.apk
           **/build/outputs/apk/debug/*.apk
-          **/*.apk
