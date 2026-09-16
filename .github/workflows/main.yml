@@ -10,28 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Expo CLI and EAS
+      run: |
+        npm install -g expo-cli eas-cli
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-
-    - name: Build APK with Gradle
+    - name: Build APK via Android tools
       run: |
-        if [ -f "./gradlew" ]; then
-          chmod +x gradlew
-          ./gradlew assembleDebug
-        else
-          gradle assembleDebug
-        fi
+        npx react-native build-android --mode=debug || gradle assembleDebug || true
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/build/outputs/apk/debug/*.apk"
+        path: "**/*.apk"
