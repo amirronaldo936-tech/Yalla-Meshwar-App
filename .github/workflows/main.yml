@@ -24,23 +24,27 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Generate Keystore & Build APK
+    - name: Generate Keystore in exact paths
       run: |
-        # 1. إنشاء ملف debug.keystore تلقائياً
+        # إنشاء ملف debug.keystore في الجذر وفي كل المجلدات المتوقعة
+        keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
         mkdir -p app/
-        keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
+        cp debug.keystore app/debug.keystore || true
         
-        # 2. تثبيت حزم Node إذا وجدت
+        if [ -d "android" ]; then
+          cp debug.keystore android/debug.keystore || true
+          cp debug.keystore android/app/debug.keystore || true
+        fi
+
+    - name: Build APK
+      run: |
         if [ -f "package.json" ]; then
           npm install --force
           npx expo prebuild --platform android || true
         fi
 
-        # 3. التأكد من مجلد الأندرويد والتشغيل
         if [ -d "android" ]; then
           cd android
-          mkdir -p app/
-          keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
         fi
 
         if [ ! -f "./gradlew" ]; then
