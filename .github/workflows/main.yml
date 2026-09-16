@@ -24,23 +24,23 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Build Everything
+    - name: Generate Keystore & Build APK
       run: |
-        # 1. تثبيت حزم Node إذا وجدت
+        # 1. إنشاء ملف debug.keystore تلقائياً
+        mkdir -p app/
+        keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
+        
+        # 2. تثبيت حزم Node إذا وجدت
         if [ -f "package.json" ]; then
           npm install --force
           npx expo prebuild --platform android || true
         fi
 
-        # 2. إنشاء مشروع أندرويد مؤقت لو لم يكن هناك أي ملفات أندرويد
-        if [ ! -f "build.gradle" ] && [ ! -f "android/build.gradle" ]; then
-          echo "No Android folder found, generating android files..."
-          npx react-native eject || true
-        fi
-
-        # 3. تشغيل البناء بغض النظر عن وجود gradlew
+        # 3. التأكد من مجلد الأندرويد والتشغيل
         if [ -d "android" ]; then
           cd android
+          mkdir -p app/
+          keytool -genkey -v -keystore app/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
         fi
 
         if [ ! -f "./gradlew" ]; then
