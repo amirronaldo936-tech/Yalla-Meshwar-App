@@ -12,31 +12,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Generate Android Project & Build APK
+    - name: Make Gradle Executable
       run: |
-        npx expo prebuild --platform android || true
-        if [ -f "./android/gradlew" ]; then
-          cd android && chmod +x gradlew && ./gradlew assembleDebug
-        elif [ -f "./gradlew" ]; then
-          chmod +x gradlew && ./gradlew assembleDebug
+        find . -name "gradlew" -exec chmod +x {} \; || true
+
+    - name: Build APK
+      run: |
+        if [ -f "./gradlew" ]; then
+          ./gradlew assembleDebug --continue
+        elif [ -f "./android/gradlew" ]; then
+          cd android && ./gradlew assembleDebug --continue
+        else
+          gradle assembleDebug --continue || true
         fi
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/*.apk"
+        path: |
+          **/*.apk
