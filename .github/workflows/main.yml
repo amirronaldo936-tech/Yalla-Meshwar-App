@@ -12,27 +12,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-
-    - name: Install Expo CLI and EAS
-      run: |
-        npm install -g expo-cli eas-cli
-
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build APK via Android tools
+    - name: Build Debug APK
       run: |
-        npx react-native build-android --mode=debug || gradle assembleDebug || true
+        gradle assembleDebug --stacktrace
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/*.apk"
+        path: app/build/outputs/apk/debug/app-debug.apk
