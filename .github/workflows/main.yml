@@ -1,4 +1,4 @@
-name: Build Android APK Final
+name: Build Android APK Direct
 
 on:
   push:
@@ -19,33 +19,41 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Find and Build APK
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Build Everything
       run: |
-        # 1. البحث عن ملف gradlew أو build.gradle
-        GRADLEW_PATH=$(find . -name "gradlew" | head -n 1)
-        
-        if [ -n "$GRADLEW_PATH" ]; then
-          TARGET_DIR=$(dirname "$GRADLEW_PATH")
-          echo "Found gradlew in: $TARGET_DIR"
-          cd "$TARGET_DIR"
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
-        else
-          BUILD_DIR=$(find . -maxdepth 3 -name "build.gradle" -exec dirname {} \; | head -n 1)
-          if [ -n "$BUILD_DIR" ]; then
-            echo "Found build.gradle in: $BUILD_DIR"
-            cd "$BUILD_DIR"
-            gradle wrapper
-            chmod +x gradlew
-            ./gradlew assembleDebug --no-daemon
-          else
-            echo "No Android Gradle project found!"
-            exit 1
-          fi
+        # 1. تثبيت حزم Node إذا وجدت
+        if [ -f "package.json" ]; then
+          npm install --force
+          npx expo prebuild --platform android || true
         fi
+
+        # 2. إنشاء مشروع أندرويد مؤقت لو لم يكن هناك أي ملفات أندرويد
+        if [ ! -f "build.gradle" ] && [ ! -f "android/build.gradle" ]; then
+          echo "No Android folder found, generating android files..."
+          npx react-native eject || true
+        fi
+
+        # 3. تشغيل البناء بغض النظر عن وجود gradlew
+        if [ -d "android" ]; then
+          cd android
+        fi
+
+        if [ ! -f "./gradlew" ]; then
+          gradle wrapper
+        fi
+
+        chmod +x gradlew
+        ./gradlew assembleDebug --no-daemon
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: "**/build/outputs/apk/debug/*.apk"
+        path: |
+          **/build/outputs/apk/debug/*.apk
+          **/*.apk
