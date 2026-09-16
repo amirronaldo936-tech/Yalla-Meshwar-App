@@ -19,44 +19,32 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-
-    - name: Auto-Detect and Build APK
+    - name: Find and Build APK
       run: |
-        echo "=== Checking Project Structure ==="
+        # 1. البحث عن ملف gradlew أو build.gradle
+        GRADLEW_PATH=$(find . -name "gradlew" | head -n 1)
         
-        # 1. إذا كان المشروع يحتوي على package.json (React Native / Expo)
-        if [ -f "package.json" ]; then
-          echo "Node/React Native project detected."
-          npm install --legacy-peer-deps
-          npx expo prebuild --platform android || true
+        if [ -n "$GRADLEW_PATH" ]; then
+          TARGET_DIR=$(dirname "$GRADLEW_PATH")
+          echo "Found gradlew in: $TARGET_DIR"
+          cd "$TARGET_DIR"
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+        else
+          BUILD_DIR=$(find . -maxdepth 3 -name "build.gradle" -exec dirname {} \; | head -n 1)
+          if [ -n "$BUILD_DIR" ]; then
+            echo "Found build.gradle in: $BUILD_DIR"
+            cd "$BUILD_DIR"
+            gradle wrapper
+            chmod +x gradlew
+            ./gradlew assembleDebug --no-daemon
+          else
+            echo "No Android Gradle project found!"
+            exit 1
+          fi
         fi
 
-        # 2. البحث عن ملف gradlew أو إنشاؤه في المجلد الصحيح
-        BUILD_DIR=$(find . -maxdepth 3 -name "build.gradle" -exec dirname {} \; | head -n 1)
-        if [ -z "$BUILD_DIR" ]; then
-          echo "Error: No Android/Gradle project found in repository!"
-          exit 1
-        fi
-
-        cd "$BUILD_DIR"
-        echo "Building in: $(pwd)"
-
-        if [ ! -f "./gradlew" ]; then
-          echo "Generating Gradle Wrapper..."
-          gradle wrapper
-        fi
-
-        chmod +x gradlew
-        ./gradlew assembleDebug --no-daemon --stacktrace
-
-    - name: Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
